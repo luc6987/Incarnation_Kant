@@ -1,0 +1,25 @@
+app:
+  title: "Digital Kant"
+  version: "0.0.9"
+  language: "en"  # Default language
+
+llm:
+  model_name: "gemma-3-27b-it"
+  temperature: 0.3
+  max_output_tokens: 8192
+  api_key: "AIzaSyC8C73c7PWNTqObMeGBSi8-QJ-NlS_hGYM"  # Read from env
+
+database:
+  persist_directory: "./data/chromadb"
+  collection_name: "kant_corpus_local"
+  embedding_model: "BAAI/bge-m3"
+  top_k: 3
+
+hyde:
+  enabled: true
+  model_name: "gemma-3-27b-it"
+  temperature: 0.0
+
+rearticulation:
+  model_name: "gemma-3-27b-it"
+  temperature: 0.3

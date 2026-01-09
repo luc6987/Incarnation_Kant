@@ -1,0 +1,294 @@
+# Digital Kant Baseline v2.0 - 项目结构定义
+# Project Structure Definition (YAML)
+
+project_name: "Digital Kant Baseline v2.0"
+version: "2.0.0"
+description: "跨语言、跨时空的康德数字人格 - 基于 Korpora 的 18 世纪德语原文 RAG"
+
+# 根目录结构
+root_structure:
+  - name: "app"
+    description: "Streamlit 前端应用"
+    type: "directory"
+    children:
+      - name: "__init__.py"
+        type: "file"
+        description: "Python 包初始化文件"
+      - name: "main.py"
+        type: "file"
+        description: "Streamlit 主入口文件"
+      - name: "ui"
+        type: "directory"
+        description: "UI 组件模块"
+        children:
+          - name: "__init__.py"
+          - name: "components.py"
+            description: "可复用的 Streamlit 组件"
+          - name: "layouts.py"
+            description: "页面布局定义"
+      - name: "config.py"
+        type: "file"
+        description: "应用配置管理"
+
+  - name: "src"
+    description: "核心源代码"
+    type: "directory"
+    children:
+      - name: "__init__.py"
+        type: "file"
+      
+      # 模块一：数据库构造
+      - name: "database"
+        type: "directory"
+        description: "数据库构造模块 - 抓取、清洗、切片、存储"
+        children:
+          - name: "__init__.py"
+          - name: "scraper.py"
+            description: "Korpora 网页抓取器"
+          - name: "cleaner.py"
+            description: "HTML 清洗，保留引用元数据"
+          - name: "chunker.py"
+            description: "按段落切分文本"
+          - name: "indexer.py"
+            description: "ChromaDB 索引构建"
+          - name: "builder.py"
+            description: "数据库构建主流程"
+      
+      # 模块二：HyDE 桥接
+      - name: "hyde"
+        type: "directory"
+        description: "全语言输入与 HyDE 桥接模块"
+        children:
+          - name: "__init__.py"
+          - name: "translator.py"
+            description: "将任意语言问题转化为 18 世纪德语风格"
+          - name: "embedder.py"
+            description: "向量嵌入生成"
+          - name: "retriever.py"
+            description: "ChromaDB 检索器"
+          - name: "bridge.py"
+            description: "HyDE 桥接主流程"
+      
+      # 模块三：现代重述
+      - name: "rearticulation"
+        type: "directory"
+        description: "现代重述引擎 - 第一人称输出"
+        children:
+          - name: "__init__.py"
+          - name: "prompt_builder.py"
+            description: "System Prompt 构建器"
+          - name: "generator.py"
+            description: "LLM 生成器（Gemini）"
+          - name: "formatter.py"
+            description: "输出格式化（原文引用 + 现代重述）"
+          - name: "engine.py"
+            description: "重述引擎主流程"
+      
+      # 工具模块
+      - name: "utils"
+        type: "directory"
+        description: "通用工具函数"
+        children:
+          - name: "__init__.py"
+          - name: "logger.py"
+            description: "日志配置"
+          - name: "config_loader.py"
+            description: "配置加载器"
+          - name: "language_detector.py"
+            description: "语言检测"
+          - name: "text_processor.py"
+            description: "文本处理工具函数"
+
+  - name: "data"
+    description: "数据存储目录"
+    type: "directory"
+    children:
+      - name: "raw"
+        type: "directory"
+        description: "原始抓取的 HTML/文本文件"
+      - name: "cleaned"
+        type: "directory"
+        description: "清洗后的纯文本文件"
+      - name: "chunks"
+        type: "directory"
+        description: "切分后的文本块（JSON/Parquet）"
+      - name: "chromadb"
+        type: "directory"
+        description: "ChromaDB 数据库文件"
+        gitignore: true
+
+  - name: "tests"
+    description: "测试文件"
+    type: "directory"
+    children:
+      - name: "__init__.py"
+      - name: "test_database.py"
+        description: "数据库模块测试"
+      - name: "test_hyde.py"
+        description: "HyDE 模块测试"
+      - name: "test_rearticulation.py"
+        description: "重述模块测试"
+      - name: "test_integration.py"
+        description: "集成测试"
+      - name: "fixtures"
+        type: "directory"
+        description: "测试数据"
+
+  - name: "logs"
+    description: "日志文件目录"
+    type: "directory"
+    gitignore: true
+
+  - name: "config"
+    description: "配置文件目录"
+    type: "directory"
+    children:
+      - name: "default.yaml"
+        description: "默认配置"
+      - name: "prompts.yaml"
+        description: "Prompt 模板配置"
+      - name: "model_config.yaml"
+        description: "模型配置（Gemini API Key 等）"
+
+  - name: "scripts"
+    description: "脚本工具"
+    type: "directory"
+    children:
+      - name: "build_database.py"
+        description: "构建数据库的独立脚本"
+      - name: "test_retrieval.py"
+        description: "测试检索效果"
+      - name: "benchmark.py"
+        description: "性能基准测试"
+
+  - name: "docs"
+    description: "文档目录"
+    type: "directory"
+    children:
+      - name: "api.md"
+        description: "API 文档"
+      - name: "architecture.md"
+        description: "架构设计文档"
+      - name: "deployment.md"
+        description: "部署指南"
+
+# 根目录文件
+root_files:
+  - name: "README.md"
+    description: "项目说明文档"
+  - name: "requirements.txt"
+    description: "Python 依赖包"
+  - name: "requirements-dev.txt"
+    description: "开发环境依赖"
+  - name: ".gitignore"
+    description: "Git 忽略文件"
+  - name: ".cursorrules"
+    description: "Cursor AI 规则文件"
+  - name: "pyproject.toml"
+    description: "项目元数据和构建配置"
+  - name: "LICENSE"
+    description: "MIT 许可证"
+
+# 环境变量文件
+env_files:
+  - name: ".env.example"
+    description: "环境变量示例文件"
+  - name: ".env"
+    description: "实际环境变量（不提交到 Git）"
+    gitignore: true
+
+# 模块依赖关系
+module_dependencies:
+  app:
+    depends_on: ["src.rearticulation", "src.hyde", "src.utils"]
+  
+  src.database:
+    depends_on: ["src.utils"]
+    external: ["chromadb", "beautifulsoup4", "requests"]
+  
+  src.hyde:
+    depends_on: ["src.database", "src.utils"]
+    external: ["google-generativeai", "sentence-transformers"]
+  
+  src.rearticulation:
+    depends_on: ["src.hyde", "src.utils"]
+    external: ["google-generativeai"]
+  
+  src.utils:
+    external: ["python-dotenv", "pyyaml", "langdetect"]
+
+# 数据流
+data_flow:
+  - step: 1
+    name: "数据抓取"
+    module: "src.database.scraper"
+    input: "korpora.org URLs"
+    output: "data/raw/*.html"
+  
+  - step: 2
+    name: "数据清洗"
+    module: "src.database.cleaner"
+    input: "data/raw/*.html"
+    output: "data/cleaned/*.txt"
+  
+  - step: 3
+    name: "文本切分"
+    module: "src.database.chunker"
+    input: "data/cleaned/*.txt"
+    output: "data/chunks/*.json"
+  
+  - step: 4
+    name: "向量索引"
+    module: "src.database.indexer"
+    input: "data/chunks/*.json"
+    output: "data/chromadb/"
+  
+  - step: 5
+    name: "用户查询"
+    module: "app.main"
+    input: "任意语言问题"
+    output: "src.hyde.bridge"
+  
+  - step: 6
+    name: "HyDE 转换"
+    module: "src.hyde.bridge"
+    input: "用户问题"
+    output: "德语伪查询 + 向量检索结果"
+  
+  - step: 7
+    name: "现代重述"
+    module: "src.rearticulation.engine"
+    input: "检索结果 + 用户问题"
+    output: "第一人称现代语言重述"
+
+# 配置管理
+config_structure:
+  app_config:
+    streamlit:
+      page_title: "Digital Kant v2.0"
+      page_icon: "🏛️"
+      layout: "wide"
+  
+  model_config:
+    gemini:
+      model_name: "gemini-pro"
+      temperature: 0.7
+      max_tokens: 2000
+    
+    embedding:
+      model_name: "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+      device: "cpu"
+  
+  database_config:
+    chromadb:
+      collection_name: "kant_korpora"
+      persist_directory: "data/chromadb"
+      embedding_function: "sentence-transformers"
+  
+  hyde_config:
+    translation_prompt_template: "config/prompts.yaml::hyde_translation"
+    max_query_length: 500
+  
+  rearticulation_config:
+    system_prompt_template: "config/prompts.yaml::kant_persona"
+    output_format: "markdown"

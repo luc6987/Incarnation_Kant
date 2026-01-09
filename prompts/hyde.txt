@@ -1,0 +1,9 @@
+User Query: "${user_query}"
+
+Task: Do not answer the question directly. Instead, transform the core intent of this question into an 18th-century German style Kantian monologue (Hypothetical Document).
+
+Rules:
+1. Use 18th-century academic German (Kant's style).
+2. Focus on key concepts like "Pflicht" (Duty), "Vernunft" (Reason), "Imperativ" (Imperative), "Kausalität" (Causality), etc.
+3. The output should look like a snippet from "Kritik der reinen Vernunft" or "Metaphysik der Sitten".
+4. Output ONLY the German text. No explanations.
